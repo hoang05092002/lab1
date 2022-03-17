@@ -18,6 +18,8 @@ export class ProductComponent implements OnInit {
       price: "100000000"
     }
   ];
+
+  tempPro = this.products;
   newProduct = {
     id: 0,
     name: '',
@@ -67,5 +69,15 @@ export class ProductComponent implements OnInit {
   editPro(pro: any) {
     this.newProduct = pro;
     this.isEdit = true;
+  }
+
+  confirmRemove(id: number) {
+    if(confirm('Are you sure you want to delete this product?')){
+      this.remove(id);
+    }
+  }
+
+  remove(proId: number) {
+    this.tempPro = this.products.filter((product) => product.id !== proId);
   }
 }

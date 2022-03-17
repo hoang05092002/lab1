@@ -29,12 +29,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let product of products">
+          <tr *ngFor="let product of tempPro">
             <td>{{product.id}}</td>
             <td>{{product.name}}</td>
             <td>{{product.description}}</td>
             <td>{{product.price}}</td>
             <td><button (click)="editPro(product)" class="btn btn-success">Edit</button></td>
+            <td><button (click)="confirmRemove(product.id)" class="btn btn-danger">Delete</button></td>
           </tr>
         </tbody>
       </table>
