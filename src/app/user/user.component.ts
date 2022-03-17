@@ -46,7 +46,7 @@ export class UserComponent implements OnInit {
     }
   }
   remove(id: number) {
-    this.users = this.users.filter((user) => user.id !== id);
+    this.filterUser = this.users.filter((user) => user.id !== id);
   }
 
   convertToUnicode(value: string) {
@@ -79,10 +79,77 @@ export class UserComponent implements OnInit {
     const lowerCaseValue = event.target.value.toLowerCase();
     //2. Xử lý khoảng trắng trong keyword
     let keyWord = lowerCaseValue.trim();
-    keyWord = this.convertToUnicode(keyWord);    
+    keyWord = this.convertToUnicode(keyWord);
     //3. Filter username theo keyword
     this.filterUser = this.users.filter(
       (user) => user.name.toLowerCase().indexOf(keyWord) !== -1
     );
+  }
+
+  // Định nghĩa object newUser trung gian
+  newUser = {
+    id: 0,
+    name: '',
+    age: 0,
+    phone: '',
+    avatar: '',
+  };
+
+  onChange(event: any, key: string): void {
+    this.newUser = {
+      ...this.newUser,
+      [key]: event.target.value,
+    };
+    console.log(this.newUser);
+  }
+
+  onSubmit() {
+    // 0. Validate
+    if (!this.onValidate(this.newUser)) {
+      return;
+    }
+
+    if (this.isEdit) {
+      for (let i = 0; i < this.users.length; i++) {
+        if (this.users[i].id === this.newUser.id) {
+          this.users[i] = this.newUser;
+        }
+      }
+      this.isEdit = false;
+    } else {
+      // Gán ID bằng độ dài mảng + 1
+      this.newUser.id = this.users.length + 1;
+      //Thêm user mới vào bảng users
+      this.users.push(this.newUser);
+    }
+
+    //Gán lại giá trị gốc cho newUser
+    this.newUser = {
+      id: 0,
+      name: '',
+      age: 0,
+      phone: '',
+      avatar: '',
+    };
+  }
+
+  onValidate(obj: any) {
+    if (!obj.name || !obj.age || !obj.phone || !obj.avatar || obj.age <= '0') {
+      return false;
+      console.log(false);
+    }
+    return true;
+  }
+
+  //Mặc định đang tạo mới
+  isEdit = false;
+  onEdit(obj: any) {
+    // Gán dữ liệu vào newUser
+    this.newUser = obj;
+    //Chuyển trạng thái form thành sửa
+    this.isEdit = true;
+    console.log(this.isEdit);
+
+    // Xử lí update khi isEdit true
   }
 }
