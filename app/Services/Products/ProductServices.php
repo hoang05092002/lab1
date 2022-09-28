@@ -29,11 +29,11 @@ class ProductServices
                 $imageName = $image->hashName();
                 $imageName = $request->name . '_' . $imageName;
                 $product->thumb = $image->storeAs('images/products', $imageName);
-                $product->content = $request->content;
-                $product->name = $request->name;
-                $product->price_id = $request->price_id;
-                $product->menu_id = $request->menu_id;
-                $product->active = $request->active;
+//                $product->content = $request->content;
+//                $product->name = $request->name;
+//                $product->price_id = $request->price_id;
+//                $product->menu_id = $request->menu_id;
+//                $product->active = $request->active;
                 $product->save();
             }
 
@@ -56,5 +56,8 @@ class ProductServices
             Session::flash('error', $err->getMessage());
             return false;
         }
+    }
+    public function update($data){
+
     }
 }
